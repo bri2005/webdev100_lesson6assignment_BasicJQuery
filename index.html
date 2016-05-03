@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<script src="lib/jquery-2.2.3.min.js"></script> 
+
+	<style>
+		.box {
+			height: 100px;
+			width: 100px;
+			margin: 10px;
+		}
+
+		#clickReminder {
+			position: fixed;
+			top: 300px;
+			left: 175px;
+			font-family: "Helvetica";
+			font-size: xx-large;
+		}
+
+	</style>
+</head>
+
+<body>
+
+<!-- jQuery animation script -->
+<script>
+
+	function randomizeColors() {
+
+		var boxes = [myBox1, myBox2, myBox3, myBox4,
+						 myBox5, myBox6, myBox7, myBox8];
+
+			//Give the boxes a random colour for every show
+			for (var i=0; i<boxes.length; i++) {
+				
+				var boxColor = "rgb("
+								+(Math.round(Math.random()*255))+","
+								+(Math.round(Math.random()*255))+","
+								+(Math.round(Math.random()*255))+")";
+
+				$("#myBox"+i).css(
+					"background-color", boxColor
+				);
+			}
+	}
+
+	function startTheShow() {
+			randomizeColors();
+
+			//pick a random box to animate
+			for (var i=0; i<1000; i++) {
+				var randomBox = Math.floor(Math.random() * 8);
+				var randomWidth = Math.floor(Math.random() * 1000) + "px";
+				var randomHeight = Math.floor(Math.random() * 200) + "px";
+				$("#myBox"+randomBox).animate({
+		   			 width: randomWidth,
+		   			 height: randomHeight
+				}, 500);
+			}	
+	}
+
+
+	$(document).ready(
+		function() {
+
+			$("body").click(
+				function() {
+					startTheShow();
+					$("#clickReminder").text("Click anywhere to randomize the colours!");
+				}
+			);	
+			
+			$("body").keydown(function(event) {
+					
+					//if they type a lower case B then set the background to black
+					if (event.which === 66) {
+							$("body").css({ "background-color":"black"});
+
+					} 
+					//if they type a lower case w then set the background to white
+					else if (event.which === 87) {
+							$("body").css({ "background-color":"white"});
+					}
+			});
+
+			$("body").dblclick(
+				function() {
+					$("body").css({ "background-color":"white"});
+				}
+			);
+
+			$(".box").mouseenter(
+				function() {
+					$(this).css({ "opacity": 0.5});
+				}
+			)
+
+			$(".box").mouseleave(
+				function() {
+					$(this).css({ "opacity": 1});
+				}
+			)
+
+		}
+	);
+
+</script>
+
+<div id="myBox1" class="box"></div>
+<div id="myBox2" class="box"></div>
+<div id="myBox3" class="box"></div>
+<div id="myBox4" class="box"></div>
+<div id="myBox5" class="box"></div>
+<div id="myBox6" class="box"></div>
+<div id="myBox7" class="box"></div>
+<div id="myBox8" class="box"></div>
+
+<span id="clickReminder">Click anywhere to start!</span>
+
+</body>
+
+</html>
